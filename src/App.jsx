@@ -707,7 +707,7 @@ const styles = {
     margin: "0 auto",
   },
   loading: { textAlign: "center", padding: "80px 0", color: "#999", fontSize: 16 },
-  header: { textAlign: "center", marginBottom: 28 },
+  header: { textAlign: "center", marginBottom: 28, paddingTop: "max(16px, env(safe-area-inset-top))" },
   title: {
     fontFamily: "'DM Serif Display', serif",
     fontSize: 32, fontWeight: 400, color: "#2c2520",
@@ -756,11 +756,11 @@ const styles = {
   addLabel: { fontSize: 13, fontWeight: 500, letterSpacing: "0.3px" },
   modalOverlay: {
     position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)",
-    display: "flex", alignItems: "flex-end", justifyContent: "center",
+    display: "flex", alignItems: "center", justifyContent: "center",
     zIndex: 100, padding: 16, fontFamily: "'DM Sans', sans-serif",
   },
   modal: {
-    background: "#faf6f1", borderRadius: "20px 20px 12px 12px",
+    background: "#faf6f1", borderRadius: 20,
     padding: "28px 24px 24px", width: "100%", maxWidth: 400,
   },
   modalTitle: {
