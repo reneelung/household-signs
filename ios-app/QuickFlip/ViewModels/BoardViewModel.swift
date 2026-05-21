@@ -8,6 +8,7 @@ class BoardViewModel {
     var boardName = ""
     var boards: [Board] = []
     var boardMembers: [BoardMember] = []
+    var selectedBoard: Board?
     var showBoardModal = false
     var boardModalMode: BoardModalMode = .create
     var inputText = ""
@@ -135,6 +136,26 @@ class BoardViewModel {
             }
         } catch {
             errorMessage = "Failed to join board: \(error.localizedDescription)"
+        }
+    }
+
+    @MainActor
+    func deleteBoard(_ board: Board) async {
+        do {
+            try await supabase
+                .from("boards")
+                .delete()
+                .eq("id", value: board.id.uuidString)
+                .execute()
+
+            boards.removeAll { $0.id == board.id }
+            boardMembers.removeAll { $0.boardId == board.id }
+
+            if let userId = supabase.auth.currentUser?.id {
+                await checkMembership(userId: UUID(uuidString: userId.uuidString) ?? UUID())
+            }
+        } catch {
+            errorMessage = "Failed to delete board: \(error.localizedDescription)"
         }
     }
 

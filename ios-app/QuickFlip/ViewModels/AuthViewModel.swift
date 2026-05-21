@@ -27,26 +27,16 @@ class AuthViewModel {
 
     private func setupAuthListener() {
         authSubscription = Task {
-            for await state in supabase.auth.authStateChanges {
-                switch state {
-                case .signedIn(let session), .signedOut(let session), .passwordRecovery(let session):
+            for await (event, session) in supabase.auth.authStateChanges {
+                await MainActor.run {
                     self.user = session?.user
-                    await self.updateAuthStep()
-                case .initialSession:
-                    self.user = try? await supabase.auth.session.user
-                    await self.updateAuthStep()
-                case .userUpdated:
-                    self.user = try? await supabase.auth.session.user
-                    await self.updateAuthStep()
-                case .tokenRefreshed:
-                    break
+                    self.updateAuthStep()
                 }
             }
         }
     }
 
-    @MainActor
-    private func updateAuthStep() async {
+    private func updateAuthStep() {
         guard let user = user else {
             authStep = .auth
             return

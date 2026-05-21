@@ -32,8 +32,7 @@ struct BoardListView: View {
                         }
                     }
                     .padding(20)
-                    .background(Color.white)
-                    .border(Color.appBorder, width: 1)
+                    .background(.thinMaterial)
 
                     if boardVM.isLoadingMembership {
                         Spacer()
@@ -45,11 +44,9 @@ struct BoardListView: View {
                         List {
                             ForEach(boardVM.boards) { board in
                                 let member = boardVM.boardMembers.first { $0.boardId == board.id }
-                                NavigationLink(destination: {
-                                    BoardView(authVM: authVM, boardVM: boardVM, signsVM: signsVM)
-                                        .onAppear {
-                                            boardVM.selectBoard(board)
-                                        }
+                                Button(action: {
+                                    boardVM.selectedBoard = board
+                                    boardVM.selectBoard(board)
                                 }) {
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(board.name)
@@ -63,6 +60,36 @@ struct BoardListView: View {
                                         }
                                     }
                                     .padding(.vertical, 8)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                                .buttonStyle(.plain)
+                                .navigationDestination(item: $boardVM.selectedBoard) { _ in
+                                    BoardView(authVM: authVM, boardVM: boardVM, signsVM: signsVM)
+                                }
+                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                    Button(role: .destructive) {
+                                        Task {
+                                            await boardVM.deleteBoard(board)
+                                        }
+                                    } label: {
+                                        Image(systemName: "trash.fill")
+                                            .font(.system(size: 20))
+                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                            .background(Circle().fill(Color.red))
+                                            .foregroundColor(.white)
+                                    }
+
+                                    Button(role: .cancel) {
+                                        boardVM.boardModalMode = .create
+                                        boardVM.inputText = board.name
+                                        boardVM.errorMessage = ""
+                                        boardVM.showBoardModal = true
+                                    } label: {
+                                        Image(systemName: "square.and.pencil")
+                                            .font(.system(size: 20, weight: .bold))
+                                            .foregroundColor(.white)
+                                    }
+                                    .tint(.blue)
                                 }
                             }
                         }
@@ -70,7 +97,7 @@ struct BoardListView: View {
                     }
                 }
             }
-            .navigationBarHidden(true)
+            .toolbar(.hidden, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {

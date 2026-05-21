@@ -47,7 +47,7 @@ class SignsViewModel {
 
         await channel.subscribe()
 
-        Task {
+        Task { @MainActor in
             for await change in changes {
                 await handleRealtimeChange(change)
             }
@@ -92,10 +92,11 @@ class SignsViewModel {
         Task {
             do {
                 let formatter = ISO8601DateFormatter()
+                let activeValue = newState ? "1" : "0"
                 async let updateSign = supabase
                     .from("signs")
                     .update([
-                        "active": newState,
+                        "active": activeValue,
                         "last_changed_at": formatter.string(from: Date()),
                         "last_changed_by": userNickname
                     ])
@@ -107,7 +108,7 @@ class SignsViewModel {
                     .insert([
                         "sign_id": sign.id.uuidString,
                         "board_id": sign.boardId.uuidString,
-                        "to_state": newState,
+                        "to_state": activeValue,
                         "flipped_by": userNickname
                     ])
                     .execute()
