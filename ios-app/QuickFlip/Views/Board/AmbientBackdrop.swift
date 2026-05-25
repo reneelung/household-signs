@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AmbientBackdrop: View {
-    enum Palette { case cool, warm, forest, plum }
+    public enum Palette { case cool, warm, forest, plum }
 
     var palette: Palette = .cool
 
