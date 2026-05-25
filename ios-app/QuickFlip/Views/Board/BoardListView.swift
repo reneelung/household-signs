@@ -16,7 +16,7 @@ struct BoardListView: View {
 
                 VStack(spacing: 0) {
                     HStack {
-                        Text("QuickFlip")
+                        Text("My Groups")
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(.white)
 
@@ -104,6 +104,9 @@ struct BoardListView: View {
                             }
                             .navigationDestination(for: Board.self) { board in
                                 BoardView(authVM: authVM, boardVM: boardVM, signsVM: signsVM)
+                                    .onAppear {
+                                        boardVM.selectBoard(board)
+                                    }
                             }
                         }
                     }

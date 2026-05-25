@@ -14,7 +14,7 @@ struct BoardView: View {
 
             VStack(spacing: 0) {
                 HStack {
-                    Text("Household")
+                    Text(boardVM.boardName)
                         .font(.system(size: 34, weight: .bold))
                         .kerning(-1.1)
                     Spacer()
