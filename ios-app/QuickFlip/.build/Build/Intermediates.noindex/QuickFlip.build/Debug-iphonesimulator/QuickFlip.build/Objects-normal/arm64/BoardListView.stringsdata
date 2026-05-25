@@ -15,7 +15,7 @@
         "key": "No Boards Yet",
         "location": {
           "startingColumn": 22,
-          "startingLine": 132
+          "startingLine": 126
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "Create a board or join one with an invite code",
         "location": {
           "startingColumn": 22,
-          "startingLine": 136
+          "startingLine": 130
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "Create a Board",
         "location": {
           "startingColumn": 26,
-          "startingLine": 149
+          "startingLine": 143
         }
       },
       {
@@ -39,7 +39,15 @@
         "key": "Join with Code",
         "location": {
           "startingColumn": 26,
-          "startingLine": 164
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "Create or join board",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 216
         }
       }
     ]
