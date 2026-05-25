@@ -1,0 +1,23 @@
+{
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Utilities/TimeAgo.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/TimeAgo.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/TimeAgo.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/TimeAgo.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/TimeAgo.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/TimeAgo.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Views/Auth/NicknameView.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/NicknameView.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/NicknameView.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/NicknameView.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/NicknameView.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/NicknameView.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Views/Board/BoardView.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/BoardView.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/BoardView.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/BoardView.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/BoardView.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphoneos/QuickFlip.build/Objects-normal/arm64/BoardView.swiftdeps"
+  }
+}

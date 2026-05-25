@@ -1,0 +1,23 @@
+{
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Utilities/DesignSystem.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/DesignSystem.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/DesignSystem.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/DesignSystem.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/DesignSystem.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/DesignSystem.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Views/Board/BoardModal.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/BoardModal.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/BoardModal.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/BoardModal.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/BoardModal.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/BoardModal.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Views/Board/EmojiPickerView.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/EmojiPickerView.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/EmojiPickerView.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/EmojiPickerView.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/EmojiPickerView.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/EmojiPickerView.swiftdeps"
+  }
+}

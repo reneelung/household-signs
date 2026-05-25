@@ -1,0 +1,48 @@
+{
+  "source": "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Views/Board/BoardListView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "QuickFlip",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "No Boards Yet",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 132
+        }
+      },
+      {
+        "comment": "",
+        "key": "Create a board or join one with an invite code",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Create a Board",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 149
+        }
+      },
+      {
+        "comment": "",
+        "key": "Join with Code",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 164
+        }
+      }
+    ]
+  },
+  "version": 1
+}

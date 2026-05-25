@@ -1,0 +1,23 @@
+{
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/SourcePackages/checkouts/supabase-swift/Sources/Helpers/HTTP/LoggerInterceptor.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/LoggerInterceptor.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/LoggerInterceptor.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/LoggerInterceptor.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/LoggerInterceptor.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/LoggerInterceptor.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/SourcePackages/checkouts/supabase-swift/Sources/Helpers/HTTP/RetryRequestInterceptor.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/RetryRequestInterceptor.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/RetryRequestInterceptor.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/RetryRequestInterceptor.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/RetryRequestInterceptor.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/RetryRequestInterceptor.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/SourcePackages/checkouts/supabase-swift/Sources/Helpers/JWT.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/JWT.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/JWT.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/JWT.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/JWT.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/Supabase.build/Debug-iphoneos/Helpers.build/Objects-normal/arm64/JWT.swiftdeps"
+  }
+}

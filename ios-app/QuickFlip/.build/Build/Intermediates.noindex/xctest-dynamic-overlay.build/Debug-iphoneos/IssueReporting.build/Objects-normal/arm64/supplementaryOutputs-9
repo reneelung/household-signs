@@ -1,0 +1,23 @@
+{
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/SourcePackages/checkouts/xctest-dynamic-overlay/Sources/IssueReporting/ErrorReporting.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/ErrorReporting.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/ErrorReporting.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/ErrorReporting.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/ErrorReporting.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/ErrorReporting.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/SourcePackages/checkouts/xctest-dynamic-overlay/Sources/IssueReporting/Internal/AppHostWarning.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/AppHostWarning.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/AppHostWarning.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/AppHostWarning.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/AppHostWarning.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/AppHostWarning.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/SourcePackages/checkouts/xctest-dynamic-overlay/Sources/IssueReporting/Internal/Deprecations.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/Deprecations.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/Deprecations.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/Deprecations.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/Deprecations.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/xctest-dynamic-overlay.build/Debug-iphoneos/IssueReporting.build/Objects-normal/arm64/Deprecations.swiftdeps"
+  }
+}

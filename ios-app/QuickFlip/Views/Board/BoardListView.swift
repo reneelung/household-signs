@@ -45,8 +45,8 @@ struct BoardListView: View {
                             ForEach(boardVM.boards) { board in
                                 let member = boardVM.boardMembers.first { $0.boardId == board.id }
                                 Button(action: {
-                                    boardVM.selectedBoard = board
                                     boardVM.selectBoard(board)
+                                    boardVM.selectedBoard = board
                                 }) {
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(board.name)
@@ -63,9 +63,6 @@ struct BoardListView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .buttonStyle(.plain)
-                                .navigationDestination(item: $boardVM.selectedBoard) { _ in
-                                    BoardView(authVM: authVM, boardVM: boardVM, signsVM: signsVM)
-                                }
                                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                     Button(role: .destructive) {
                                         Task {
@@ -94,6 +91,9 @@ struct BoardListView: View {
                             }
                         }
                         .listStyle(.plain)
+                        .navigationDestination(item: $boardVM.selectedBoard) { _ in
+                            BoardView(authVM: authVM, boardVM: boardVM, signsVM: signsVM)
+                        }
                     }
                 }
             }

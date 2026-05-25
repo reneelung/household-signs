@@ -1,0 +1,88 @@
+{
+  "source": "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Views/Board/BoardView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Delete this sign?",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Household",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Delete %@",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add sign",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "No flip boards yet",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edit Sign",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 195
+        }
+      },
+      {
+        "comment": "",
+        "key": "Choose Emoji",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sign Name",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 249
+        }
+      },
+      {
+        "comment": "",
+        "key": "e.g., Dishwasher",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 254
+        }
+      }
+    ]
+  },
+  "version": 1
+}

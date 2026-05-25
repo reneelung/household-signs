@@ -1,0 +1,23 @@
+{
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/App/QuickFlipApp.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/QuickFlipApp.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/QuickFlipApp.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/QuickFlipApp.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/QuickFlipApp.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/QuickFlipApp.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Models/Board.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/Board.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/Board.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/Board.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/Board.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/Board.swiftdeps"
+  },
+  "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Views/Auth/AuthView.swift" : {
+    "const-values" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/AuthView.swiftconstvalues",
+    "dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/AuthView.d",
+    "diagnostics" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/AuthView.dia",
+    "object" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/AuthView.o",
+    "swift-dependencies" : "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/.build/Build/Intermediates.noindex/QuickFlip.build/Debug-iphonesimulator/QuickFlip.build/Objects-normal/arm64/AuthView.swiftdeps"
+  }
+}

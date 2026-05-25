@@ -162,6 +162,28 @@ class SignsViewModel {
         }
     }
 
+    @MainActor
+    func updateSign(id: UUID, label: String, emoji: String, stateOffLabel: String, stateOnLabel: String) async {
+        errorMessage = ""
+        isLoading = true
+        defer { isLoading = false }
+
+        do {
+            try await supabase
+                .from("signs")
+                .update([
+                    "label": label,
+                    "emoji": emoji,
+                    "state_off_label": stateOffLabel,
+                    "state_on_label": stateOnLabel
+                ])
+                .eq("id", value: id.uuidString)
+                .execute()
+        } catch {
+            errorMessage = "Failed to update sign: \(error.localizedDescription)"
+        }
+    }
+
     func cleanup() {
         Task {
             await realtimeChannel?.unsubscribe()

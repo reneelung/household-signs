@@ -1,0 +1,16 @@
+{
+  "source": "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/App/QuickFlipApp.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Loading...",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 19
+        }
+      }
+    ]
+  },
+  "version": 1
+}

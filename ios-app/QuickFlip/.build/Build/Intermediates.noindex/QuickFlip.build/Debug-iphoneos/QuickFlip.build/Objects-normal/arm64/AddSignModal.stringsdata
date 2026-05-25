@@ -1,0 +1,72 @@
+{
+  "source": "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Views/Board/AddSignModal.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Add Sign",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Choose Emoji",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sign Name",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "e.g., Dishwasher",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Off State Label",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "e.g., Dirty",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "On State Label",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "e.g., Clean",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 128
+        }
+      }
+    ]
+  },
+  "version": 1
+}

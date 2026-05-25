@@ -1,0 +1,40 @@
+{
+  "source": "/Users/reneelung/Workspace/house-signs/ios-app/QuickFlip/Views/Board/BoardModal.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Create Board",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Join Board",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Board Name",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invite Code",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 62
+        }
+      }
+    ]
+  },
+  "version": 1
+}
