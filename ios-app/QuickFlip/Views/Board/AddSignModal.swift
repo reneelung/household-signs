@@ -43,7 +43,8 @@ struct AddSignModal: View {
                                         label: label,
                                         emoji: selectedEmoji,
                                         stateOffLabel: stateOffLabel,
-                                        stateOnLabel: stateOnLabel
+                                        stateOnLabel: stateOnLabel,
+                                        userNickname: authVM.user?.userMetadata["display_name"]?.stringValue ?? "Unknown"
                                     )
                                     dismiss()
                                 }

@@ -15,7 +15,7 @@
         "key": "Choose Emoji",
         "location": {
           "startingColumn": 38,
-          "startingLine": 70
+          "startingLine": 71
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "Sign Name",
         "location": {
           "startingColumn": 38,
-          "startingLine": 79
+          "startingLine": 80
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "e.g., Dishwasher",
         "location": {
           "startingColumn": 43,
-          "startingLine": 84
+          "startingLine": 85
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "Off State Label",
         "location": {
           "startingColumn": 38,
-          "startingLine": 101
+          "startingLine": 102
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "e.g., Dirty",
         "location": {
           "startingColumn": 43,
-          "startingLine": 106
+          "startingLine": 107
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "On State Label",
         "location": {
           "startingColumn": 38,
-          "startingLine": 123
+          "startingLine": 124
         }
       },
       {
@@ -63,7 +63,7 @@
         "key": "e.g., Clean",
         "location": {
           "startingColumn": 43,
-          "startingLine": 128
+          "startingLine": 129
         }
       }
     ]

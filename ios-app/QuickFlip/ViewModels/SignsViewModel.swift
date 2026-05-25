@@ -123,12 +123,14 @@ class SignsViewModel {
     }
 
     @MainActor
-    func addSign(label: String, emoji: String, stateOffLabel: String, stateOnLabel: String) async {
+    func addSign(label: String, emoji: String, stateOffLabel: String, stateOnLabel: String, userNickname: String = "Unknown") async {
         guard let boardId = boardId else { return }
         errorMessage = ""
 
         do {
             let position = (signs.map(\.position).max() ?? 0) + 1
+            let formatter = ISO8601DateFormatter()
+            let now = formatter.string(from: Date())
 
             try await supabase
                 .from("signs")
@@ -138,7 +140,9 @@ class SignsViewModel {
                     "emoji": emoji,
                     "state_off_label": stateOffLabel,
                     "state_on_label": stateOnLabel,
-                    "position": String(position)
+                    "position": String(position),
+                    "last_changed_by": userNickname,
+                    "last_changed_at": now
                 ])
                 .execute()
 
