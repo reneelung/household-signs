@@ -4,7 +4,7 @@ struct EmptyBoardView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        Text("No flip boards yet")
+        Text("No status cards yet")
             .font(.system(size: 17, weight: .medium))
             .kerning(-0.2)
             .foregroundStyle(colorScheme == .dark
