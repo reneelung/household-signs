@@ -5,6 +5,7 @@ struct QuickFlipApp: App {
     @State private var authVM = AuthViewModel()
     @State private var boardVM = BoardViewModel()
     @State private var signsVM = SignsViewModel()
+    @State private var pendingJoin = PendingJoin.shared
 
     var body: some Scene {
         WindowGroup {
@@ -35,7 +36,23 @@ struct QuickFlipApp: App {
                     )
                 }
             }
+            .onOpenURL { url in
+                JoinGroupCoordinator.handle(url)
+            }
+            .fullScreenCover(
+                isPresented: Binding(
+                    get: { pendingJoin.code != nil && authVM.authStep == .done },
+                    set: { newValue in if !newValue { pendingJoin.clear() } }
+                )
+            ) {
+                if let code = pendingJoin.code {
+                    JoinGroupView(
+                        inviteCode: code,
+                        authVM: authVM,
+                        boardVM: boardVM
+                    )
+                }
+            }
         }
     }
 }
-

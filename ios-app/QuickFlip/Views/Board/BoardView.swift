@@ -7,6 +7,9 @@ struct BoardView: View {
     @State private var showingAddSheet = false
     @State private var editingSign: Sign?
     @State private var deletingSign: Sign?
+    @State private var showSettings = false
+    @State private var showNotifications = false
+    @State private var confirmingSignOut = false
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -18,7 +21,12 @@ struct BoardView: View {
                         .font(.system(size: 34, weight: .bold))
                         .kerning(-1.1)
                     Spacer()
-                    AvatarPill(initial: authVM.user?.userMetadata["display_name"]?.stringValue?.prefix(1).uppercased() ?? "?")
+                    AvatarMenuButton(
+                        authVM: authVM,
+                        showSettings: $showSettings,
+                        showNotifications: $showNotifications,
+                        confirmingSignOut: $confirmingSignOut
+                    )
                 }
                 .padding(.horizontal, 18)
                 .padding(.top, 12)
@@ -63,6 +71,31 @@ struct BoardView: View {
         .sheet(item: $editingSign) { sign in
             EditSignView(sign: sign, signsVM: signsVM)
         }
+        .sheet(isPresented: $showSettings) {
+            SettingsView(authVM: authVM)
+        }
+        .sheet(isPresented: $showNotifications) {
+            NotificationsView()
+        }
+        .confirmationDialog(
+            "Sign out?",
+            isPresented: $confirmingSignOut,
+            titleVisibility: .visible
+        ) {
+            Button("Sign out", role: .destructive) {
+                Task {
+                    await authVM.signOut()
+                    boardVM.boardId = nil
+                    boardVM.boards = []
+                    boardVM.boardMembers = []
+                    boardVM.signsByBoard = [:]
+                    boardVM.selectedBoard = nil
+                }
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("You'll need to sign in again to see your groups.")
+        }
         .confirmationDialog(
             "Delete this sign?",
             isPresented: Binding(
@@ -89,18 +122,6 @@ struct BoardView: View {
     }
 }
 
-private struct AvatarPill: View {
-    let initial: String
-    @Environment(\.colorScheme) private var colorScheme
-
-    var body: some View {
-        Text(initial)
-            .font(.system(size: 18, weight: .bold))
-            .foregroundStyle(colorScheme == .dark ? .black : .white)
-            .frame(width: 36, height: 36)
-            .background(Circle().fill(Color(hex: "FFD600")))
-    }
-}
 
 private struct AddSignFAB: View {
     let action: () -> Void

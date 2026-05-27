@@ -166,7 +166,8 @@ private struct AvatarBubble: View {
             Color(hex: "1ED760"),
             Color(hex: "FF4DCB"),
         ]
-        return palette[abs(name.hashValue) % palette.count]
+        let stableHash = name.unicodeScalars.reduce(0) { $0 &+ Int($1.value) }
+        return palette[stableHash % palette.count]
     }
 
     var body: some View {

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>QuickFlip · Shared household signs</title>
+<meta name="description" content="QuickFlip — flip the dishwasher sign, the trash sign, the laundry sign. Everyone in your household sees the change instantly." />
+<meta name="apple-itunes-app" content="app-id=YOUR_APP_STORE_ID" />
+<meta property="og:title" content="Join on QuickFlip" />
+<meta property="og:description" content="You've been invited to a household on QuickFlip." />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0c;
+    --text: #ffffff;
+    --muted: rgba(255,255,255,0.6);
+    --yellow: #FFD600;
+  }
+  html, body {
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    min-height: 100vh;
+    position: relative;
+  }
+  /* Ambient blobs — match the app */
+  .blob {
+    position: fixed;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob.b1 { background: #3B5BFF; left: 8%;  top: 8%; }
+  .blob.b2 { background: #FF4DCB; right: 4%; top: 28%; }
+  .blob.b3 { background: #1ED760; left: 30%; bottom: 8%; }
+  .wash {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 0; pointer-events: none;
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+  }
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px 6px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border: 0.5px solid rgba(255,255,255,0.15);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    margin-bottom: 48px;
+  }
+  .logo .glyph {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: var(--yellow);
+    color: #000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+  }
+
+  h1 {
+    font-size: clamp(36px, 8vw, 56px);
+    font-weight: 900;
+    letter-spacing: -1.8px;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  h1 .yellow { color: var(--yellow); }
+
+  .lead {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--muted);
+    max-width: 380px;
+    margin: 0 auto 36px;
+    text-wrap: pretty;
+  }
+
+  .signs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto 40px;
+    flex-wrap: wrap;
+  }
+  .sign {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border: 0.5px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 16px 32px;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: #000;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    box-shadow: 0 14px 36px rgba(255,214,0,0.35);
+    transition: transform 0.15s ease;
+  }
+  .cta:active { transform: scale(0.97); }
+
+  .footer {
+    margin-top: 56px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+  }
+</style>
+</head>
+<body>
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+<div class="blob b3"></div>
+<div class="wash"></div>
+
+<main>
+  <div class="logo">
+    <span class="glyph">Q</span>
+    QUICKFLIP
+  </div>
+
+  <h1>Flip a <span class="yellow">sign</span>.<br>Everyone sees it.</h1>
+
+  <p class="lead">A shared, real-time household for the things you keep forgetting — dishwasher clean or dirty, trash day, laundry done, garage open.</p>
+
+  <div class="signs">
+    <div class="sign">🍽️</div>
+    <div class="sign">🗑️</div>
+    <div class="sign">🧺</div>
+    <div class="sign">🚪</div>
+    <div class="sign">🛏️</div>
+  </div>
+
+  <a class="cta" href="https://apps.apple.com/app/idYOUR_APP_STORE_ID">Get QuickFlip</a>
+
+  <div class="footer">If QuickFlip is installed, your invite link should open the app directly.</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Cloudflare Pages headers config.
+# Uncomment the block below if `curl -I` shows the AASA file being
+# served as text/plain instead of application/json. Cloudflare's
+# auto-detection usually gets it right on its own.
+
+# /.well-known/apple-app-site-association
+#   Content-Type: application/json

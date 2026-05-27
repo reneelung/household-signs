@@ -101,4 +101,58 @@ class AuthViewModel {
     deinit {
         authSubscription?.cancel()
     }
+
+    var displayName: String {
+        user?.userMetadata["display_name"]?.stringValue ?? "Account"
+    }
+
+    var accountEmail: String {
+        user?.email ?? ""
+    }
+
+    var initial: String {
+        String(displayName.prefix(1)).uppercased()
+    }
+}
+
+@Observable
+final class PendingJoin {
+    static let shared = PendingJoin()
+
+    private let key = "pendingInviteCode"
+
+    var code: String? {
+        didSet {
+            if let code {
+                UserDefaults.standard.set(code, forKey: key)
+            } else {
+                UserDefaults.standard.removeObject(forKey: key)
+            }
+        }
+    }
+
+    private init() {
+        self.code = UserDefaults.standard.string(forKey: key)
+    }
+
+    func clear() {
+        code = nil
+    }
+}
+
+enum JoinGroupCoordinator {
+    static let allowedHosts: Set<String> = [
+        "quickflip-app.pages.dev"
+    ]
+
+    @discardableResult
+    static func handle(_ url: URL) -> Bool {
+        guard let host = url.host, allowedHosts.contains(host) else { return false }
+        let parts = url.pathComponents
+        guard parts.count >= 3, parts[1] == "join" else { return false }
+        let code = parts[2]
+        guard !code.isEmpty else { return false }
+        PendingJoin.shared.code = code
+        return true
+    }
 }

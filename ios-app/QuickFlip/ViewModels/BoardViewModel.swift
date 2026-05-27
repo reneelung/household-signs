@@ -2,12 +2,52 @@ import Supabase
 import Foundation
 import Observation
 
+private struct ProfileRow: Codable {
+    let id: UUID
+    let displayName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case displayName = "display_name"
+    }
+}
+
+private struct BoardInviteRow: Codable {
+    let id: UUID
+    let boardId: UUID
+    let code: String
+    let createdBy: UUID
+    let expiresAt: Date?
+    let maxUses: Int?
+    let useCount: Int
+    let revokedAt: Date?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case boardId = "board_id"
+        case code
+        case createdBy = "created_by"
+        case expiresAt = "expires_at"
+        case maxUses = "max_uses"
+        case useCount = "use_count"
+        case revokedAt = "revoked_at"
+    }
+}
+
+struct BoardPreview {
+    let board: Board
+    let members: [BoardMember]
+    let signs: [Sign]
+    let inviterName: String?
+}
+
 @Observable
 class BoardViewModel {
     var boardId: UUID?
     var boardName = ""
     var boards: [Board] = []
     var boardMembers: [BoardMember] = []
+    var signsByBoard: [UUID: [Sign]] = [:]
     var selectedBoard: Board?
     var showBoardModal = false
     var boardModalMode: BoardModalMode = .create
@@ -46,12 +86,51 @@ class BoardViewModel {
                     .execute()
                     .value
                 boards = fetchedBoards
+
+                var allMembers: [BoardMember] = try await supabase
+                    .from("board_members")
+                    .select()
+                    .in("board_id", values: boardIds)
+                    .execute()
+                    .value
+
+                let userIds = Array(Set(allMembers.map { $0.userId.uuidString }))
+                if !userIds.isEmpty {
+                    let profiles: [ProfileRow] = try await supabase
+                        .from("profiles")
+                        .select()
+                        .in("id", values: userIds)
+                        .execute()
+                        .value
+                    let profilesById = Dictionary(uniqueKeysWithValues: profiles.map { ($0.id, $0) })
+                    allMembers = allMembers.map { member in
+                        var m = member
+                        if let p = profilesById[member.userId] {
+                            m.profile = BoardMember.Profile(displayName: p.displayName)
+                        }
+                        return m
+                    }
+                }
+                boardMembers = allMembers
+
+                let signs: [Sign] = try await supabase
+                    .from("signs")
+                    .select()
+                    .in("board_id", values: boardIds)
+                    .execute()
+                    .value
+                signsByBoard = Dictionary(grouping: signs, by: { $0.boardId })
             } else {
                 boards = []
+                signsByBoard = [:]
             }
         } catch {
             errorMessage = "Failed to check board membership: \(error.localizedDescription)"
         }
+    }
+
+    func getSigns(for board: Board) -> [Sign] {
+        signsByBoard[board.id] ?? []
     }
 
     @MainActor
@@ -159,9 +238,236 @@ class BoardViewModel {
         }
     }
 
+    @MainActor
+    func togglePin(_ board: Board) async {
+        let newPinnedState = !board.isPinned
+        if let index = boards.firstIndex(where: { $0.id == board.id }) {
+            boards[index].isPinned = newPinnedState
+        }
+
+        do {
+            try await supabase
+                .from("boards")
+                .update(["is_pinned": newPinnedState])
+                .eq("id", value: board.id.uuidString)
+                .execute()
+        } catch {
+            errorMessage = "Failed to toggle pin: \(error.localizedDescription)"
+            if let index = boards.firstIndex(where: { $0.id == board.id }) {
+                boards[index].isPinned = !newPinnedState
+            }
+        }
+    }
+
+    @MainActor
+    func leave(_ board: Board) async {
+        errorMessage = ""
+        do {
+            guard let userId = supabase.auth.currentUser?.id else {
+                errorMessage = "Not authenticated"
+                return
+            }
+
+            try await supabase
+                .from("board_members")
+                .delete()
+                .eq("board_id", value: board.id.uuidString)
+                .eq("user_id", value: userId.uuidString)
+                .execute()
+
+            boards.removeAll { $0.id == board.id }
+            boardMembers.removeAll { $0.boardId == board.id }
+
+            if let userId = supabase.auth.currentUser?.id {
+                await checkMembership(userId: UUID(uuidString: userId.uuidString) ?? UUID())
+            }
+        } catch {
+            errorMessage = "Failed to leave board: \(error.localizedDescription)"
+        }
+    }
+
     func resetModal() {
         boardModalMode = .create
         inputText = ""
         errorMessage = ""
+    }
+
+    func getUserRole(for board: Board) -> String? {
+        boardMembers.first { $0.boardId == board.id }?.role
+    }
+
+    func isOwner(of board: Board) -> Bool {
+        getUserRole(for: board) == "owner"
+    }
+
+    func getMembers(for board: Board) -> [BoardMember] {
+        boardMembers.filter { $0.boardId == board.id }
+    }
+
+    // MARK: - Invites
+
+    private static let inviteHost = "quickflip-app.pages.dev"
+
+    func inviteURL(for code: String) -> URL {
+        URL(string: "https://\(Self.inviteHost)/join/\(code)")!
+    }
+
+    @MainActor
+    func activeInviteCode(for board: Board) async throws -> String {
+        let now = ISO8601DateFormatter().string(from: Date())
+        let existing: [BoardInviteRow] = try await supabase
+            .from("board_invites")
+            .select()
+            .eq("board_id", value: board.id.uuidString)
+            .is("revoked_at", value: nil)
+            .or("expires_at.is.null,expires_at.gt.\(now)")
+            .order("created_at", ascending: false)
+            .limit(1)
+            .execute()
+            .value
+
+        if let row = existing.first {
+            return row.code
+        }
+        return try await createInviteCode(boardID: board.id)
+    }
+
+    @MainActor
+    func resetInviteCode(for board: Board) async throws -> String {
+        let now = ISO8601DateFormatter().string(from: Date())
+        try await supabase
+            .from("board_invites")
+            .update(["revoked_at": now])
+            .eq("board_id", value: board.id.uuidString)
+            .is("revoked_at", value: nil)
+            .execute()
+        return try await createInviteCode(boardID: board.id)
+    }
+
+    @MainActor
+    func join(inviteCode: String) async throws -> UUID {
+        let data = try await supabase
+            .rpc("join_board", params: ["invite_code": inviteCode])
+            .execute()
+            .data
+
+        let trimmed = String(data: data, encoding: .utf8)?
+            .trimmingCharacters(in: CharacterSet(charactersIn: "\"\n")) ?? ""
+        guard let id = UUID(uuidString: trimmed) else {
+            throw NSError(domain: "BoardViewModel", code: -1, userInfo: [
+                NSLocalizedDescriptionKey: "Invalid response from join_board"
+            ])
+        }
+
+        if let userId = supabase.auth.currentUser?.id {
+            await checkMembership(userId: UUID(uuidString: userId.uuidString) ?? UUID())
+        }
+        return id
+    }
+
+    @MainActor
+    func fetchBoardPreview(inviteCode: String) async throws -> BoardPreview {
+        let invites: [BoardInviteRow] = try await supabase
+            .from("board_invites")
+            .select()
+            .eq("code", value: inviteCode.uppercased())
+            .is("revoked_at", value: nil)
+            .limit(1)
+            .execute()
+            .value
+
+        guard let invite = invites.first else {
+            throw NSError(domain: "BoardViewModel", code: 404, userInfo: [
+                NSLocalizedDescriptionKey: "This invite link is no longer valid."
+            ])
+        }
+
+        let boards: [Board] = try await supabase
+            .from("boards")
+            .select()
+            .eq("id", value: invite.boardId.uuidString)
+            .limit(1)
+            .execute()
+            .value
+
+        guard let board = boards.first else {
+            throw NSError(domain: "BoardViewModel", code: 404, userInfo: [
+                NSLocalizedDescriptionKey: "This group no longer exists."
+            ])
+        }
+
+        var members: [BoardMember] = try await supabase
+            .from("board_members")
+            .select()
+            .eq("board_id", value: board.id.uuidString)
+            .execute()
+            .value
+
+        let userIds = Array(Set(members.map { $0.userId.uuidString } + [invite.createdBy.uuidString]))
+        var inviterName: String?
+        if !userIds.isEmpty {
+            let profiles: [ProfileRow] = try await supabase
+                .from("profiles")
+                .select()
+                .in("id", values: userIds)
+                .execute()
+                .value
+            let profilesById = Dictionary(uniqueKeysWithValues: profiles.map { ($0.id, $0) })
+            members = members.map { member in
+                var m = member
+                if let p = profilesById[member.userId] {
+                    m.profile = BoardMember.Profile(displayName: p.displayName)
+                }
+                return m
+            }
+            inviterName = profilesById[invite.createdBy]?.displayName
+        }
+
+        let signs: [Sign] = try await supabase
+            .from("signs")
+            .select()
+            .eq("board_id", value: board.id.uuidString)
+            .order("position", ascending: true)
+            .execute()
+            .value
+
+        return BoardPreview(board: board, members: members, signs: signs, inviterName: inviterName)
+    }
+
+    @MainActor
+    private func createInviteCode(boardID: UUID) async throws -> String {
+        guard let userId = supabase.auth.currentUser?.id else {
+            throw NSError(domain: "BoardViewModel", code: 401, userInfo: [
+                NSLocalizedDescriptionKey: "Not authenticated"
+            ])
+        }
+
+        for _ in 0..<5 {
+            let code = Self.generateInviteCode()
+            do {
+                try await supabase
+                    .from("board_invites")
+                    .insert([
+                        "board_id": boardID.uuidString,
+                        "code": code,
+                        "created_by": userId.uuidString
+                    ])
+                    .execute()
+                return code
+            } catch {
+                let message = error.localizedDescription.lowercased()
+                if !message.contains("duplicate") && !message.contains("unique") {
+                    throw error
+                }
+            }
+        }
+        throw NSError(domain: "BoardViewModel", code: 500, userInfo: [
+            NSLocalizedDescriptionKey: "Could not generate a unique invite code."
+        ])
+    }
+
+    private static func generateInviteCode() -> String {
+        let chars = Array("ABCDEFGHJKLMNPQRSTUVWXYZ23456789")
+        return String((0..<8).map { _ in chars.randomElement()! })
     }
 }
