@@ -13,14 +13,16 @@ struct NicknameView: View {
                 VStack(spacing: 24) {
                     Text("Choose a Nickname")
                         .font(.system(size: 28, weight: .semibold))
-                        .foregroundColor(.appText)
+                        .foregroundColor(.black)
 
                     Text("This is how others will see you when you flip signs.")
                         .font(.system(size: 15))
-                        .foregroundColor(.appSecondary)
+                        .foregroundColor(Color.black.opacity(0.55))
                         .multilineTextAlignment(.center)
 
                     TextField("Enter your nickname", text: $authVM.nickname)
+                        .foregroundColor(.black)
+                        .tint(.black)
                         .padding(12)
                         .background(Color.white)
                         .cornerRadius(8)

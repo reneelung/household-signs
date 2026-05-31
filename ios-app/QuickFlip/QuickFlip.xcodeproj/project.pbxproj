@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A34C1432FC9F83A0085F580 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A34C1422FC9F83A0085F580 /* Assets.xcassets */; };
 		9A7B24EE2FAFD6CE001E2B8A /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B24DD2FAFD6CE001E2B8A /* TimeAgo.swift */; };
 		9A7B24EF2FAFD6CE001E2B8A /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B24E92FAFD6CE001E2B8A /* BoardView.swift */; };
 		9A7B24F02FAFD6CE001E2B8A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B24E42FAFD6CE001E2B8A /* NicknameView.swift */; };
@@ -25,8 +26,18 @@
 		9A7B24FD2FAFD6CE001E2B8A /* BoardMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B24D82FAFD6CE001E2B8A /* BoardMember.swift */; };
 		9A7B24FE2FAFD6CE001E2B8A /* SupabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B24D52FAFD6CE001E2B8A /* SupabaseClient.swift */; };
 		9A7B25002FAFD6CE001E2B8A /* AddSignModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B24E62FAFD6CE001E2B8A /* AddSignModal.swift */; };
-		9A7B25042FAFD6CE001E2B8A /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B24E82FAFD6CE001E2B8A /* BoardListView.swift */; };
 		9A7B25032FAFD8CF001E2B8A /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 9A7B25022FAFD8CF001E2B8A /* Supabase */; };
+		9A7B25042FAFD6CE001E2B8A /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7B24E82FAFD6CE001E2B8A /* BoardListView.swift */; };
+		B0020001000000000000A001 /* AvatarMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0010001000000000000A001 /* AvatarMenuButton.swift */; };
+		B0020002000000000000A001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0010002000000000000A001 /* SettingsView.swift */; };
+		B0020003000000000000A001 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0010003000000000000A001 /* NotificationsView.swift */; };
+		B0020004000000000000A001 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0010004000000000000A001 /* ProfileView.swift */; };
+		B0020005000000000000A001 /* MemberAvatarBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0010005000000000000A001 /* MemberAvatarBubble.swift */; };
+		B0020006000000000000A001 /* AmbientBackdrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0010006000000000000A001 /* AmbientBackdrop.swift */; };
+		B0020007000000000000A001 /* InviteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0010007000000000000A001 /* InviteSheet.swift */; };
+		B0020008000000000000A001 /* MemberRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0010008000000000000A001 /* MemberRow.swift */; };
+		B0020009000000000000A001 /* JoinGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0010009000000000000A001 /* JoinGroupView.swift */; };
+		B002000A000000000000A001 /* MailComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B001000A000000000000A001 /* MailComposeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A34C1422FC9F83A0085F580 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A47BDE72FAFD234003C019E /* QuickFlip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickFlip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A47BDF72FAFD235003C019E /* QuickFlipTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickFlipTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A47BE012FAFD235003C019E /* QuickFlipUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickFlipUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +81,16 @@
 		9A7B24E92FAFD6CE001E2B8A /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		9A7B24EA2FAFD6CE001E2B8A /* EmojiPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerView.swift; sourceTree = "<group>"; };
 		9A7B24EB2FAFD6CE001E2B8A /* SignCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignCardView.swift; sourceTree = "<group>"; };
+		B0010001000000000000A001 /* AvatarMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarMenuButton.swift; sourceTree = "<group>"; };
+		B0010002000000000000A001 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B0010003000000000000A001 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
+		B0010004000000000000A001 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		B0010005000000000000A001 /* MemberAvatarBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberAvatarBubble.swift; sourceTree = "<group>"; };
+		B0010006000000000000A001 /* AmbientBackdrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbientBackdrop.swift; sourceTree = "<group>"; };
+		B0010007000000000000A001 /* InviteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteSheet.swift; sourceTree = "<group>"; };
+		B0010008000000000000A001 /* MemberRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRow.swift; sourceTree = "<group>"; };
+		B0010009000000000000A001 /* JoinGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupView.swift; sourceTree = "<group>"; };
+		B001000A000000000000A001 /* MailComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -140,6 +162,7 @@
 			children = (
 				9A7B24D42FAFD6CE001E2B8A /* QuickFlipApp.swift */,
 				9A7B24D52FAFD6CE001E2B8A /* SupabaseClient.swift */,
+				9A34C1422FC9F83A0085F580 /* Assets.xcassets */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -199,10 +222,44 @@
 		9A7B24ED2FAFD6CE001E2B8A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B0030001000000000000A001 /* Account */,
 				9A7B24E52FAFD6CE001E2B8A /* Auth */,
 				9A7B24EC2FAFD6CE001E2B8A /* Board */,
+				B0030002000000000000A001 /* Components */,
+				B0030003000000000000A001 /* Invite */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		B0030001000000000000A001 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				B0010001000000000000A001 /* AvatarMenuButton.swift */,
+				B0010003000000000000A001 /* NotificationsView.swift */,
+				B0010004000000000000A001 /* ProfileView.swift */,
+				B0010002000000000000A001 /* SettingsView.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		B0030002000000000000A001 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B0010006000000000000A001 /* AmbientBackdrop.swift */,
+				B0010005000000000000A001 /* MemberAvatarBubble.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		B0030003000000000000A001 /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				B0010007000000000000A001 /* InviteSheet.swift */,
+				B0010009000000000000A001 /* JoinGroupView.swift */,
+				B001000A000000000000A001 /* MailComposeView.swift */,
+				B0010008000000000000A001 /* MemberRow.swift */,
+			);
+			path = Invite;
 			sourceTree = "<group>";
 		};
 		9A7B25012FAFD8CF001E2B8A /* Frameworks */ = {
@@ -333,6 +390,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A34C1432FC9F83A0085F580 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +434,16 @@
 				9A7B24FE2FAFD6CE001E2B8A /* SupabaseClient.swift in Sources */,
 				9A7B25002FAFD6CE001E2B8A /* AddSignModal.swift in Sources */,
 				9A7B25042FAFD6CE001E2B8A /* BoardListView.swift in Sources */,
+				B0020001000000000000A001 /* AvatarMenuButton.swift in Sources */,
+				B0020002000000000000A001 /* SettingsView.swift in Sources */,
+				B0020003000000000000A001 /* NotificationsView.swift in Sources */,
+				B0020004000000000000A001 /* ProfileView.swift in Sources */,
+				B0020005000000000000A001 /* MemberAvatarBubble.swift in Sources */,
+				B0020006000000000000A001 /* AmbientBackdrop.swift in Sources */,
+				B0020007000000000000A001 /* InviteSheet.swift in Sources */,
+				B0020008000000000000A001 /* MemberRow.swift in Sources */,
+				B0020009000000000000A001 /* JoinGroupView.swift in Sources */,
+				B002000A000000000000A001 /* MailComposeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

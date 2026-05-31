@@ -142,7 +142,7 @@ final class PendingJoin {
 
 enum JoinGroupCoordinator {
     static let allowedHosts: Set<String> = [
-        "quickflip-app.pages.dev"
+        "quickflip-app.reneelung.workers.dev"
     ]
 
     @discardableResult

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AuthView: View {
     @Bindable var authVM: AuthViewModel
+    @State private var isPasswordVisible = false
 
     var body: some View {
         ZStack {
@@ -13,7 +14,7 @@ struct AuthView: View {
                 VStack(spacing: 24) {
                     Text(authVM.isSignUp ? "Create Account" : "Sign In")
                         .font(.system(size: 28, weight: .semibold))
-                        .foregroundColor(.appText)
+                        .foregroundColor(.black)
 
                     VStack(spacing: 12) {
                         TextField("Email", text: $authVM.email)
@@ -21,16 +22,42 @@ struct AuthView: View {
                             .keyboardType(.emailAddress)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
+                            .foregroundColor(.black)
+                            .tint(.black)
                             .padding(12)
                             .background(Color.white)
                             .cornerRadius(8)
                             .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.appBorder, lineWidth: 1))
 
-                        SecureField("Password", text: $authVM.password)
-                            .padding(12)
-                            .background(Color.white)
-                            .cornerRadius(8)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.appBorder, lineWidth: 1))
+                        HStack(spacing: 8) {
+                            Group {
+                                if isPasswordVisible {
+                                    TextField("Password", text: $authVM.password)
+                                        .textContentType(.password)
+                                        .autocapitalization(.none)
+                                        .disableAutocorrection(true)
+                                } else {
+                                    SecureField("Password", text: $authVM.password)
+                                        .textContentType(.password)
+                                }
+                            }
+                            .foregroundColor(.black)
+                            .tint(.black)
+
+                            Button {
+                                isPasswordVisible.toggle()
+                            } label: {
+                                Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
+                                    .foregroundColor(Color.black.opacity(0.55))
+                                    .frame(width: 28, height: 28)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(isPasswordVisible ? "Hide password" : "Show password")
+                        }
+                        .padding(12)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.appBorder, lineWidth: 1))
                     }
 
                     if !authVM.errorMessage.isEmpty {
@@ -66,7 +93,7 @@ struct AuthView: View {
                     HStack {
                         Text(authVM.isSignUp ? "Already have an account?" : "Don't have an account?")
                             .font(.system(size: 14))
-                            .foregroundColor(.appSecondary)
+                            .foregroundColor(Color.black.opacity(0.55))
 
                         Button(action: {
                             authVM.email = ""

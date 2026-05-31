@@ -9,6 +9,7 @@ struct BoardView: View {
     @State private var deletingSign: Sign?
     @State private var showSettings = false
     @State private var showNotifications = false
+    @State private var showProfile = false
     @State private var confirmingSignOut = false
 
     var body: some View {
@@ -25,6 +26,7 @@ struct BoardView: View {
                         authVM: authVM,
                         showSettings: $showSettings,
                         showNotifications: $showNotifications,
+                        showProfile: $showProfile,
                         confirmingSignOut: $confirmingSignOut
                     )
                 }
@@ -76,6 +78,9 @@ struct BoardView: View {
         }
         .sheet(isPresented: $showNotifications) {
             NotificationsView()
+        }
+        .sheet(isPresented: $showProfile) {
+            ProfileView(authVM: authVM)
         }
         .confirmationDialog(
             "Sign out?",
@@ -288,6 +293,58 @@ private struct EditSignView: View {
                                     }
                             }
 
+                            VStack(spacing: 12) {
+                                Text("Off State Label")
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundColor(.appSecondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                TextField("e.g., Dirty", text: $stateOffLabel)
+                                    .autocapitalization(.none)
+                                    .disableAutocorrection(true)
+                                    .font(.system(size: 18, weight: .regular))
+                                    .foregroundColor(.appText)
+                                    .padding(12)
+                                    .frame(minHeight: 56)
+                                    .background(Color(uiColor: .secondarySystemBackground))
+                                    .cornerRadius(16)
+                                    .onChange(of: stateOffLabel) { _, newValue in
+                                        if newValue.count > 16 {
+                                            stateOffLabel = String(newValue.prefix(16))
+                                        }
+                                    }
+                            }
+
+                            VStack(spacing: 12) {
+                                Text("On State Label")
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundColor(.appSecondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                TextField("e.g., Clean", text: $stateOnLabel)
+                                    .autocapitalization(.none)
+                                    .disableAutocorrection(true)
+                                    .font(.system(size: 18, weight: .regular))
+                                    .foregroundColor(.appText)
+                                    .padding(12)
+                                    .frame(minHeight: 56)
+                                    .background(Color(uiColor: .secondarySystemBackground))
+                                    .cornerRadius(16)
+                                    .onChange(of: stateOnLabel) { _, newValue in
+                                        if newValue.count > 16 {
+                                            stateOnLabel = String(newValue.prefix(16))
+                                        }
+                                    }
+                            }
+
+                            if !signsVM.errorMessage.isEmpty {
+                                Text(signsVM.errorMessage)
+                                    .font(.system(size: 13))
+                                    .foregroundColor(.red)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, 16)
+                            }
+
                             Spacer()
                         }
                         .padding(16)
@@ -295,65 +352,6 @@ private struct EditSignView: View {
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
-        }
-    }
-}
-
-private struct AmbientBackdrop: View {
-    enum Palette { case cool, warm, forest, plum }
-
-    var palette: Palette = .cool
-
-    @Environment(\.colorScheme) private var colorScheme
-
-    private let anchors: [(CGFloat, CGFloat)] = [
-        (0.18, 0.12), (0.78, 0.30), (0.40, 0.75)
-    ]
-
-    private var colors: [Color] {
-        let dark = colorScheme == .dark
-        switch (palette, dark) {
-        case (.cool,   true):  return [Color(hex: "3B5BFF"), Color(hex: "FF4DCB"), Color(hex: "22D3EE")]
-        case (.cool,   false): return [Color(hex: "A9C4FF"), Color(hex: "FFB8E3"), Color(hex: "A6ECF4")]
-        case (.warm,   true):  return [Color(hex: "FF8A3D"), Color(hex: "FFD600"), Color(hex: "FF3D7F")]
-        case (.warm,   false): return [Color(hex: "FFCFA8"), Color(hex: "FFE680"), Color(hex: "FFB8C8")]
-        case (.forest, true):  return [Color(hex: "1ED760"), Color(hex: "FFD600"), Color(hex: "3B5BFF")]
-        case (.forest, false): return [Color(hex: "B8ECC4"), Color(hex: "FFE680"), Color(hex: "A9C4FF")]
-        case (.plum,   true):  return [Color(hex: "9B5BFF"), Color(hex: "FF4DCB"), Color(hex: "FFD600")]
-        case (.plum,   false): return [Color(hex: "D4BAFF"), Color(hex: "FFB8E3"), Color(hex: "FFE680")]
-        }
-    }
-
-    private var baseColor: Color {
-        colorScheme == .dark ? .black : Color(hex: "F5F5F7")
-    }
-
-    private var washColor: Color {
-        colorScheme == .dark
-            ? Color.black.opacity(0.45)
-            : Color(hex: "EEEEF2").opacity(0.40)
-    }
-
-    var body: some View {
-        GeometryReader { geo in
-            ZStack {
-                baseColor
-                if #available(iOS 17, *) {
-                    ForEach(Array(colors.enumerated()), id: \.offset) { idx, color in
-                        Circle()
-                            .fill(color)
-                            .frame(width: 280, height: 280)
-                            .blur(radius: 60)
-                            .opacity(colorScheme == .dark ? 0.55 : 0.60)
-                            .position(
-                                x: geo.size.width  * anchors[idx].0,
-                                y: geo.size.height * anchors[idx].1
-                            )
-                    }
-                    washColor
-                }
-            }
-            .ignoresSafeArea()
         }
     }
 }

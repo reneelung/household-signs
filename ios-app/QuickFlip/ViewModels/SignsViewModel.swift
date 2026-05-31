@@ -155,6 +155,7 @@ class SignsViewModel {
     @MainActor
     func deleteSign(_ sign: Sign) async {
         errorMessage = ""
+        signs.removeAll { $0.id == sign.id }
         do {
             try await supabase
                 .from("signs")
@@ -163,6 +164,8 @@ class SignsViewModel {
                 .execute()
         } catch {
             errorMessage = "Failed to delete sign: \(error.localizedDescription)"
+            signs.append(sign)
+            signs.sort { $0.position < $1.position }
         }
     }
 

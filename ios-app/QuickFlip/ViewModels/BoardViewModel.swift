@@ -220,21 +220,26 @@ class BoardViewModel {
 
     @MainActor
     func deleteBoard(_ board: Board) async {
+        errorMessage = ""
+
+        let removedMembers = boardMembers.filter { $0.boardId == board.id }
+        let removedSigns = signsByBoard[board.id]
+        boards.removeAll { $0.id == board.id }
+        boardMembers.removeAll { $0.boardId == board.id }
+        signsByBoard[board.id] = nil
+        if selectedBoard?.id == board.id { selectedBoard = nil }
+
         do {
             try await supabase
                 .from("boards")
                 .delete()
                 .eq("id", value: board.id.uuidString)
                 .execute()
-
-            boards.removeAll { $0.id == board.id }
-            boardMembers.removeAll { $0.boardId == board.id }
-
-            if let userId = supabase.auth.currentUser?.id {
-                await checkMembership(userId: UUID(uuidString: userId.uuidString) ?? UUID())
-            }
         } catch {
             errorMessage = "Failed to delete board: \(error.localizedDescription)"
+            boards.append(board)
+            boardMembers.append(contentsOf: removedMembers)
+            if let removedSigns { signsByBoard[board.id] = removedSigns }
         }
     }
 
@@ -262,27 +267,30 @@ class BoardViewModel {
     @MainActor
     func leave(_ board: Board) async {
         errorMessage = ""
-        do {
-            guard let userId = supabase.auth.currentUser?.id else {
-                errorMessage = "Not authenticated"
-                return
-            }
+        guard let userId = supabase.auth.currentUser?.id else {
+            errorMessage = "Not authenticated"
+            return
+        }
 
+        let removedMembers = boardMembers.filter { $0.boardId == board.id }
+        let removedSigns = signsByBoard[board.id]
+        boards.removeAll { $0.id == board.id }
+        boardMembers.removeAll { $0.boardId == board.id }
+        signsByBoard[board.id] = nil
+        if selectedBoard?.id == board.id { selectedBoard = nil }
+
+        do {
             try await supabase
                 .from("board_members")
                 .delete()
                 .eq("board_id", value: board.id.uuidString)
                 .eq("user_id", value: userId.uuidString)
                 .execute()
-
-            boards.removeAll { $0.id == board.id }
-            boardMembers.removeAll { $0.boardId == board.id }
-
-            if let userId = supabase.auth.currentUser?.id {
-                await checkMembership(userId: UUID(uuidString: userId.uuidString) ?? UUID())
-            }
         } catch {
             errorMessage = "Failed to leave board: \(error.localizedDescription)"
+            boards.append(board)
+            boardMembers.append(contentsOf: removedMembers)
+            if let removedSigns { signsByBoard[board.id] = removedSigns }
         }
     }
 
@@ -306,7 +314,7 @@ class BoardViewModel {
 
     // MARK: - Invites
 
-    private static let inviteHost = "quickflip-app.pages.dev"
+    private static let inviteHost = "quickflip-app.reneelung.workers.dev"
 
     func inviteURL(for code: String) -> URL {
         URL(string: "https://\(Self.inviteHost)/join/\(code)")!
