@@ -5,10 +5,12 @@ import Observation
 private struct ProfileRow: Codable {
     let id: UUID
     let displayName: String?
+    let defaultBoardId: UUID?
 
     enum CodingKeys: String, CodingKey {
         case id
         case displayName = "display_name"
+        case defaultBoardId = "default_board_id"
     }
 }
 
@@ -34,11 +36,22 @@ private struct BoardInviteRow: Codable {
     }
 }
 
-struct BoardPreview {
-    let board: Board
-    let members: [BoardMember]
-    let signs: [Sign]
+struct BoardPreview: Codable {
+    let boardId: UUID
+    let boardName: String
+    let memberCount: Int
+    let signCount: Int
+    let signEmojis: [String]
     let inviterName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case boardId = "board_id"
+        case boardName = "board_name"
+        case memberCount = "member_count"
+        case signCount = "sign_count"
+        case signEmojis = "sign_emojis"
+        case inviterName = "inviter_name"
+    }
 }
 
 @Observable
@@ -52,6 +65,8 @@ class BoardViewModel {
     var showBoardModal = false
     var boardModalMode: BoardModalMode = .create
     var inputText = ""
+    var setAsDefault = false
+    var defaultBoardId: UUID?
     var errorMessage = ""
     var isLoading = false
     var isLoadingMembership = false
@@ -124,6 +139,15 @@ class BoardViewModel {
                 boards = []
                 signsByBoard = [:]
             }
+
+            let ownProfile: [ProfileRow] = try await supabase
+                .from("profiles")
+                .select()
+                .eq("id", value: userId.uuidString)
+                .limit(1)
+                .execute()
+                .value
+            defaultBoardId = ownProfile.first?.defaultBoardId
         } catch {
             errorMessage = "Failed to check board membership: \(error.localizedDescription)"
         }
@@ -176,6 +200,16 @@ class BoardViewModel {
                 boardName = inputText
                 showBoardModal = false
                 inputText = ""
+
+                if setAsDefault {
+                    do {
+                        try await persistDefaultBoard(id)
+                        defaultBoardId = id
+                    } catch {
+                        errorMessage = "Created group but could not set as default: \(error.localizedDescription)"
+                    }
+                }
+                setAsDefault = false
 
                 if let userId = supabase.auth.currentUser?.id {
                     await checkMembership(userId: UUID(uuidString: userId.uuidString) ?? UUID())
@@ -301,7 +335,10 @@ class BoardViewModel {
     }
 
     func getUserRole(for board: Board) -> String? {
-        boardMembers.first { $0.boardId == board.id }?.role
+        guard let currentUserId = supabase.auth.currentUser?.id else { return nil }
+        return boardMembers.first {
+            $0.boardId == board.id && $0.userId == currentUserId
+        }?.role
     }
 
     func isOwner(of board: Board) -> Bool {
@@ -310,6 +347,31 @@ class BoardViewModel {
 
     func getMembers(for board: Board) -> [BoardMember] {
         boardMembers.filter { $0.boardId == board.id }
+    }
+
+    func isDefault(_ board: Board) -> Bool {
+        defaultBoardId == board.id
+    }
+
+    @MainActor
+    func setDefaultBoard(_ id: UUID?) async {
+        let previous = defaultBoardId
+        defaultBoardId = id
+        do {
+            try await persistDefaultBoard(id)
+        } catch {
+            defaultBoardId = previous
+            errorMessage = "Failed to set default group: \(error.localizedDescription)"
+        }
+    }
+
+    private func persistDefaultBoard(_ id: UUID?) async throws {
+        guard let userId = supabase.auth.currentUser?.id else { return }
+        try await supabase
+            .from("profiles")
+            .update(["default_board_id": id?.uuidString])
+            .eq("id", value: userId.uuidString)
+            .execute()
     }
 
     // MARK: - Invites
@@ -375,71 +437,19 @@ class BoardViewModel {
 
     @MainActor
     func fetchBoardPreview(inviteCode: String) async throws -> BoardPreview {
-        let invites: [BoardInviteRow] = try await supabase
-            .from("board_invites")
-            .select()
-            .eq("code", value: inviteCode.uppercased())
-            .is("revoked_at", value: nil)
-            .limit(1)
+        let data = try await supabase
+            .rpc("get_invite_preview", params: ["invite_code": inviteCode])
             .execute()
-            .value
+            .data
 
-        guard let invite = invites.first else {
-            throw NSError(domain: "BoardViewModel", code: 404, userInfo: [
-                NSLocalizedDescriptionKey: "This invite link is no longer valid."
-            ])
+        let decoder = JSONDecoder()
+        if let preview = try? decoder.decode(BoardPreview.self, from: data) {
+            return preview
         }
 
-        let boards: [Board] = try await supabase
-            .from("boards")
-            .select()
-            .eq("id", value: invite.boardId.uuidString)
-            .limit(1)
-            .execute()
-            .value
-
-        guard let board = boards.first else {
-            throw NSError(domain: "BoardViewModel", code: 404, userInfo: [
-                NSLocalizedDescriptionKey: "This group no longer exists."
-            ])
-        }
-
-        var members: [BoardMember] = try await supabase
-            .from("board_members")
-            .select()
-            .eq("board_id", value: board.id.uuidString)
-            .execute()
-            .value
-
-        let userIds = Array(Set(members.map { $0.userId.uuidString } + [invite.createdBy.uuidString]))
-        var inviterName: String?
-        if !userIds.isEmpty {
-            let profiles: [ProfileRow] = try await supabase
-                .from("profiles")
-                .select()
-                .in("id", values: userIds)
-                .execute()
-                .value
-            let profilesById = Dictionary(uniqueKeysWithValues: profiles.map { ($0.id, $0) })
-            members = members.map { member in
-                var m = member
-                if let p = profilesById[member.userId] {
-                    m.profile = BoardMember.Profile(displayName: p.displayName)
-                }
-                return m
-            }
-            inviterName = profilesById[invite.createdBy]?.displayName
-        }
-
-        let signs: [Sign] = try await supabase
-            .from("signs")
-            .select()
-            .eq("board_id", value: board.id.uuidString)
-            .order("position", ascending: true)
-            .execute()
-            .value
-
-        return BoardPreview(board: board, members: members, signs: signs, inviterName: inviterName)
+        throw NSError(domain: "BoardViewModel", code: 404, userInfo: [
+            NSLocalizedDescriptionKey: "This invite link is no longer valid."
+        ])
     }
 
     @MainActor

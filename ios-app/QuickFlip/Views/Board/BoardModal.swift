@@ -18,7 +18,10 @@ struct BoardModal: View {
                             .foregroundColor(.appText)
 
                         HStack {
-                            Button(action: { dismiss() }) {
+                            Button(action: {
+                                boardVM.setAsDefault = false
+                                dismiss()
+                            }) {
                                 Image(systemName: "xmark")
                                     .font(.system(size: 16, weight: .semibold))
                                     .foregroundColor(.appText)
@@ -70,6 +73,22 @@ struct BoardModal: View {
                                 .frame(minHeight: 56)
                                 .background(Color(uiColor: .secondarySystemBackground))
                                 .cornerRadius(16)
+
+                                if boardVM.boardModalMode == .create {
+                                    Toggle(isOn: $boardVM.setAsDefault) {
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("Set as default")
+                                                .font(.system(size: 15, weight: .medium))
+                                                .foregroundColor(.appText)
+                                            Text("Open this board when you launch the app.")
+                                                .font(.system(size: 12))
+                                                .foregroundColor(.appSecondary)
+                                        }
+                                    }
+                                    .padding(12)
+                                    .background(Color(uiColor: .secondarySystemBackground))
+                                    .cornerRadius(16)
+                                }
                             }
 
                             // Error message

@@ -96,15 +96,15 @@ struct JoinGroupView: View {
                 .font(.system(size: 15))
                 .foregroundStyle(.secondary)
 
-            Text(preview.board.name)
+            Text(preview.boardName)
                 .font(.system(size: 38, weight: .heavy))
                 .kerning(-1.4)
                 .padding(.top, 2)
 
-            if !preview.signs.isEmpty {
+            if !preview.signEmojis.isEmpty {
                 HStack(spacing: 6) {
-                    ForEach(preview.signs.prefix(5)) { sign in
-                        Text(sign.emoji)
+                    ForEach(Array(preview.signEmojis.enumerated()), id: \.offset) { _, emoji in
+                        Text(emoji)
                             .font(.system(size: 21))
                             .frame(width: 38, height: 38)
                             .background(RoundedRectangle(cornerRadius: 11)
@@ -114,7 +114,7 @@ struct JoinGroupView: View {
                 .padding(.top, 6)
             }
 
-            Text("\(preview.signs.count) \(preview.signs.count == 1 ? "sign" : "signs") · \(preview.members.count) \(preview.members.count == 1 ? "member" : "members")")
+            Text("\(preview.signCount) \(preview.signCount == 1 ? "sign" : "signs") · \(preview.memberCount) \(preview.memberCount == 1 ? "member" : "members")")
                 .font(.system(size: 13))
                 .foregroundStyle(.secondary)
                 .padding(.top, 4)

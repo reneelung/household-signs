@@ -94,6 +94,7 @@ struct BoardView: View {
                     boardVM.boards = []
                     boardVM.boardMembers = []
                     boardVM.signsByBoard = [:]
+                    boardVM.defaultBoardId = nil
                     boardVM.selectedBoard = nil
                 }
             }

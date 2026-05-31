@@ -4,6 +4,9 @@ struct ProfileView: View {
     @Bindable var authVM: AuthViewModel
     @Environment(\.dismiss) private var dismiss
 
+    @State private var isEditingName = false
+    @State private var editedName = ""
+
     var body: some View {
         NavigationStack {
             Form {
@@ -25,7 +28,31 @@ struct ProfileView: View {
                 }
 
                 Section("Account") {
+                    Button {
+                        editedName = authVM.displayName
+                        isEditingName = true
+                    } label: {
+                        HStack {
+                            Text("Name")
+                                .foregroundStyle(.primary)
+                            Spacer()
+                            Text(authVM.displayName)
+                                .foregroundStyle(.secondary)
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(Color.secondary.opacity(0.5))
+                        }
+                    }
+
                     LabeledContent("Email", value: authVM.accountEmail)
+                }
+
+                if !authVM.errorMessage.isEmpty {
+                    Section {
+                        Text(authVM.errorMessage)
+                            .font(.system(size: 13))
+                            .foregroundStyle(.red)
+                    }
                 }
             }
             .navigationTitle("Profile")
@@ -34,6 +61,18 @@ struct ProfileView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }
                 }
+            }
+            .alert("Edit display name", isPresented: $isEditingName) {
+                TextField("Display name", text: $editedName)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.words)
+                Button("Save") {
+                    let newName = editedName
+                    Task { await authVM.updateDisplayName(newName) }
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text("This is how other members will see you on shared groups.")
             }
         }
     }

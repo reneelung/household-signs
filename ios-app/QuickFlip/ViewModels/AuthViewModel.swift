@@ -85,6 +85,25 @@ class AuthViewModel {
     }
 
     @MainActor
+    func updateDisplayName(_ name: String) async {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        errorMessage = ""
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            try await supabase.auth.update(user: UserAttributes(data: [
+                "display_name": .string(trimmed)
+            ]))
+            if let session = try? await supabase.auth.session {
+                user = session.user
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    @MainActor
     func signOut() async {
         do {
             try await supabase.auth.signOut()

@@ -9,17 +9,24 @@ struct BoardListView: View {
     @State private var deletingBoard: Board?
     @State private var leavingBoard: Board?
     @State private var invitingTo: Board?
+    @State private var didAutoNavigateToDefault = false
     @State private var showSettings = false
     @State private var showNotifications = false
     @State private var showProfile = false
     @State private var confirmingSignOut = false
     @Environment(\.colorScheme) private var colorScheme
 
-    private var sortedBoards: [Board] {
-        boardVM.boards.sorted { lhs, rhs in
-            if lhs.isPinned != rhs.isPinned { return lhs.isPinned }
-            return lhs.createdAt > rhs.createdAt
-        }
+    private var ownedBoards: [Board] {
+        boardVM.boards.filter { boardVM.isOwner(of: $0) }.sorted(by: sortRule)
+    }
+
+    private var memberBoards: [Board] {
+        boardVM.boards.filter { !boardVM.isOwner(of: $0) }.sorted(by: sortRule)
+    }
+
+    private func sortRule(_ lhs: Board, _ rhs: Board) -> Bool {
+        if lhs.isPinned != rhs.isPinned { return lhs.isPinned }
+        return lhs.createdAt > rhs.createdAt
     }
 
 
@@ -119,6 +126,7 @@ struct BoardListView: View {
                         boardVM.boards = []
                         boardVM.boardMembers = []
                         boardVM.signsByBoard = [:]
+                        boardVM.defaultBoardId = nil
                         boardVM.selectedBoard = nil
                     }
                 }
@@ -163,88 +171,150 @@ struct BoardListView: View {
                 if let userId = authVM.user?.id {
                     await boardVM.checkMembership(userId: UUID(uuidString: userId.uuidString) ?? UUID())
                 }
+                if !didAutoNavigateToDefault,
+                   let defaultId = boardVM.defaultBoardId,
+                   let board = boardVM.boards.first(where: { $0.id == defaultId }) {
+                    boardVM.selectBoard(board)
+                    boardVM.selectedBoard = board
+                }
+                didAutoNavigateToDefault = true
             }
         }
     }
 
     private var boardsList: some View {
         List {
-            ForEach(sortedBoards) { board in
-                let isOwner = boardVM.isOwner(of: board)
-                Button {
-                    boardVM.selectBoard(board)
-                    boardVM.selectedBoard = board
-                } label: {
-                    BoardRowView(
-                        board: board,
-                        isOwner: isOwner,
-                        members: boardVM.getMembers(for: board),
-                        signs: boardVM.getSigns(for: board)
-                    )
+            if !ownedBoards.isEmpty {
+                Section {
+                    ForEach(ownedBoards) { board in
+                        groupRow(board)
+                    }
+                } header: {
+                    GroupSectionHeader(title: "Your Groups", count: ownedBoards.count)
                 }
-                .buttonStyle(.plain)
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: 5, leading: 18, bottom: 5, trailing: 18))
-                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                    Button(role: .destructive) {
-                        deletingBoard = board
-                    } label: {
-                        Label("Delete", systemImage: "trash")
-                    }
-                    Button {
-                        editingBoard = board
-                    } label: {
-                        Label("Edit", systemImage: "pencil")
-                    }
-                    .tint(.blue)
-                }
-                .contextMenu {
-                    Button {
-                        Task { await boardVM.togglePin(board) }
-                    } label: {
-                        Label(board.isPinned ? "Unpin" : "Pin to top",
-                              systemImage: board.isPinned ? "pin.slash" : "pin")
-                    }
+            }
 
-                    Divider()
-
-                    Button {
-                        invitingTo = board
-                    } label: {
-                        Label("Members & Invites", systemImage: "person.2")
+            if !memberBoards.isEmpty {
+                Section {
+                    ForEach(memberBoards) { board in
+                        groupRow(board)
                     }
-
-                    Divider()
-
-                    Button {
-                        editingBoard = board
-                    } label: {
-                        Label("Edit Group", systemImage: "pencil")
-                    }
-
-                    if !isOwner {
-                        Button {
-                            leavingBoard = board
-                        } label: {
-                            Label("Leave Group", systemImage: "rectangle.portrait.and.arrow.right")
-                        }
-                    }
-
-                    Divider()
-
-                    Button(role: .destructive) {
-                        deletingBoard = board
-                    } label: {
-                        Label("Delete Group", systemImage: "trash")
-                    }
+                } header: {
+                    GroupSectionHeader(title: "Shared with You", count: memberBoards.count)
                 }
             }
         }
         .listStyle(.plain)
+        .listSectionSpacing(.compact)
         .scrollContentBackground(.hidden)
         .contentMargins(.top, 76, for: .scrollContent)
         .contentMargins(.bottom, 90, for: .scrollContent)
+    }
+
+    @ViewBuilder
+    private func groupRow(_ board: Board) -> some View {
+        let isOwner = boardVM.isOwner(of: board)
+        Button {
+            boardVM.selectBoard(board)
+            boardVM.selectedBoard = board
+        } label: {
+            BoardRowView(
+                board: board,
+                members: boardVM.getMembers(for: board),
+                signs: boardVM.getSigns(for: board)
+            )
+        }
+        .buttonStyle(.plain)
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
+        .listRowInsets(EdgeInsets(top: 5, leading: 18, bottom: 5, trailing: 18))
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            Button(role: .destructive) {
+                deletingBoard = board
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+            Button {
+                editingBoard = board
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+            .tint(.blue)
+        }
+        .contextMenu {
+            Button {
+                Task { await boardVM.togglePin(board) }
+            } label: {
+                Label(board.isPinned ? "Unpin" : "Pin to top",
+                      systemImage: board.isPinned ? "pin.slash" : "pin")
+            }
+
+            Button {
+                Task {
+                    await boardVM.setDefaultBoard(boardVM.isDefault(board) ? nil : board.id)
+                }
+            } label: {
+                Label(boardVM.isDefault(board) ? "Remove default" : "Set as default",
+                      systemImage: boardVM.isDefault(board) ? "star.slash" : "star")
+            }
+
+            Divider()
+
+            Button {
+                invitingTo = board
+            } label: {
+                Label("Members & Invites", systemImage: "person.2")
+            }
+
+            Divider()
+
+            Button {
+                editingBoard = board
+            } label: {
+                Label("Edit Group", systemImage: "pencil")
+            }
+
+            if !isOwner {
+                Button {
+                    leavingBoard = board
+                } label: {
+                    Label("Leave Group", systemImage: "rectangle.portrait.and.arrow.right")
+                }
+            }
+
+            Divider()
+
+            Button(role: .destructive) {
+                deletingBoard = board
+            } label: {
+                Label("Delete Group", systemImage: "trash")
+            }
+        }
+    }
+}
+
+private struct GroupSectionHeader: View {
+    let title: String
+    let count: Int
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(title.uppercased())
+                .font(.system(size: 12, weight: .bold))
+                .kerning(0.8)
+                .foregroundStyle(.secondary)
+            Text("\(count)")
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(.secondary)
+                .opacity(0.7)
+            Spacer()
+        }
+        .padding(.horizontal, 4)
+        .padding(.vertical, 2)
+        .listRowInsets(EdgeInsets(top: 8, leading: 18, bottom: 6, trailing: 18))
+        .listRowBackground(Color.clear)
+        .listSectionSeparator(.hidden)
+        .textCase(nil)
     }
 }
 
@@ -264,7 +334,6 @@ private struct EmptyBoardListView: View {
 
 private struct BoardRowView: View {
     let board: Board
-    let isOwner: Bool
     let members: [BoardMember]
     let signs: [Sign]
 
@@ -273,7 +342,6 @@ private struct BoardRowView: View {
     private let yellow = Color(hex: "FFD600")
     private let rowRadius: CGFloat = 22
     private var isDark: Bool { colorScheme == .dark }
-    private var activeSignCount: Int { signs.filter { $0.active }.count }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -291,18 +359,6 @@ private struct BoardRowView: View {
                             .font(.system(size: 19, weight: .bold))
                             .kerning(-0.5)
                             .lineLimit(1)
-
-                        if !isOwner {
-                            Text("MEMBER")
-                                .font(.system(size: 10, weight: .bold))
-                                .kerning(0.6)
-                                .padding(.horizontal, 7)
-                                .padding(.vertical, 2)
-                                .background(Capsule().fill(isDark
-                                    ? Color.white.opacity(0.10)
-                                    : Color.black.opacity(0.06)))
-                                .foregroundStyle(textMuted)
-                        }
                     }
 
                     Text(metaLine)
@@ -312,19 +368,6 @@ private struct BoardRowView: View {
                 }
 
                 Spacer()
-
-                if activeSignCount > 0 {
-                    HStack(spacing: 4) {
-                        Circle().fill(.black).frame(width: 5, height: 5)
-                        Text("\(activeSignCount)")
-                    }
-                    .font(.system(size: 10, weight: .heavy))
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(Capsule().fill(yellow))
-                    .foregroundStyle(.black)
-                    .shadow(color: yellow.opacity(0.45), radius: 6, y: 0)
-                }
             }
 
             HStack(spacing: 12) {
@@ -334,7 +377,19 @@ private struct BoardRowView: View {
                             Text(sign.emoji)
                                 .font(.system(size: 17))
                                 .frame(width: 30, height: 30)
-                                .background(RoundedRectangle(cornerRadius: 9).fill(chipFill))
+                                .background(
+                                    RoundedRectangle(cornerRadius: 9)
+                                        .fill(sign.active
+                                              ? yellow.opacity(isDark ? 0.38 : 0.45)
+                                              : chipFill)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 9)
+                                        .strokeBorder(sign.active
+                                                      ? yellow.opacity(0.8)
+                                                      : .clear,
+                                                      lineWidth: 1)
+                                )
                         }
                         if signs.count > 5 {
                             Text("+\(signs.count - 5)")
@@ -397,8 +452,9 @@ private struct BoardRowView: View {
     }
 
     private var metaLine: String {
+        let signWord = signs.count == 1 ? "sign" : "signs"
         let memberWord = members.count == 1 ? "member" : "members"
-        return "\(members.count) \(memberWord)"
+        return "\(signs.count) \(signWord) · \(members.count) \(memberWord)"
     }
 }
 

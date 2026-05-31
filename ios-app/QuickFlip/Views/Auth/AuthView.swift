@@ -76,18 +76,21 @@ struct AuthView: View {
                             }
                         }
                     }) {
-                        if authVM.isLoading {
-                            ProgressView().tint(.white)
-                        } else {
-                            Text(authVM.isSignUp ? "Sign Up" : "Sign In")
-                                .font(.system(size: 16, weight: .semibold))
+                        Group {
+                            if authVM.isLoading {
+                                ProgressView().tint(.white)
+                            } else {
+                                Text(authVM.isSignUp ? "Sign Up" : "Sign In")
+                                    .font(.system(size: 16, weight: .semibold))
+                            }
                         }
+                        .frame(maxWidth: .infinity, minHeight: 48)
+                        .background(Color.appAccent)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                        .contentShape(Rectangle())
                     }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 48)
-                    .background(Color.appAccent)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+                    .buttonStyle(.plain)
                     .disabled(authVM.isLoading || authVM.email.isEmpty || authVM.password.isEmpty)
 
                     HStack {
